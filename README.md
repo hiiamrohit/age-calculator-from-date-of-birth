@@ -53,6 +53,9 @@ It also tells users how many days are **left for their next birthday**!
 ## 🔗 Keywords (For SEO)
 
 > This tool is optimized for the following search terms:
+- Age Calculator
+- How Old Am I
+- Calculate Age From Date OF Birth
 > 
 ---
 
