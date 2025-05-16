@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Age Calculator - Calculate Age in Years, Months, and Days</title>
+    <meta name="description" content="Calculate your exact age in years, months, days, hours, minutes, and seconds with our free online age calculator.">
+    <meta name="keywords" content="age calculator, calculate age, birthdate calculator, online age calculator, age in months, next birthday">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <style>
+        .container { margin-top: 50px; }
+        h1 { text-align: center; margin-bottom: 30px; }
+        .result-input { margin-bottom: 20px; }
+        footer { background-color: #004d40; color: white; padding: 20px 0; margin-top: 40px; }
+    </style>
+</head>
+<body>
+    <!-- Main Container -->
+    <div class="container">
+        <h1 class="teal-text">Advanced Age Calculator</h1>
+        <p class="center-align">Calculate your exact age in years, months, days, hours, minutes, and seconds with ease.</p>
+
+        <form name="birthday" class="card-panel teal lighten-5">
+            <div class="input-field">
+                <select name="day" class="browser-default">
+                    <option value="" disabled selected>Day</option>
+                    <script>for(let j=1; j<=31; j++) document.write(`<option value="${j}">${j}</option>`);</script>
+                </select>
+            </div>
+            
+            <div class="input-field">
+                <select name="month" class="browser-default">
+                    <option value="" disabled selected>Month</option>
+                    <script>
+                        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                        for(let i=0; i<months.length; i++) document.write(`<option value="${i+1}">${months[i]}</option>`);
+                    </script>
+                </select>
+            </div>
+
+            <div class="input-field">
+                <select name="year" class="browser-default">
+                    <option value="" disabled selected>Year</option>
+                    <script>
+                        const currentYear = new Date().getFullYear();
+                        for(let k=currentYear-100; k<=currentYear; k++) document.write(`<option value="${k}">${k}</option>`);
+                    </script>
+                </select>
+            </div>
+            
+            <div class="center-align">
+                <button class="btn waves-effect waves-light teal" type="button" onclick="calage()">Calculate</button>
+            </div>
+
+            <!-- Results -->
+            <div class="result-input input-field">
+                <input type="text" name="age" placeholder="Age" readonly>
+            </div>
+
+            <p>You have been living for:</p>
+            <div class="result-input input-field">
+                <input type="text" name="months" placeholder="In Months" readonly>
+            </div>
+            <div class="result-input input-field">
+                <input type="text" name="daa" placeholder="In Days" readonly>
+            </div>
+            <div class="result-input input-field">
+                <input type="text" name="hours" placeholder="In Hours" readonly>
+            </div>
+            <div class="result-input input-field">
+                <input type="text" name="min" placeholder="In Minutes" readonly>
+            </div>
+            <div class="result-input input-field">
+                <input type="text" name="sec" placeholder="In Seconds" readonly>
+            </div>
+            <div class="result-input input-field">
+                <input type="text" name="nbday" placeholder="Days Left for Next Birthday" readonly>
+            </div>
+        </form>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="center-align">
+        <div class="container">
+            <p>&copy; 2024 Advanced Age Calculator. All rights reserved.</p>
+            <p>This tool helps you calculate your age and find out how many days are left until your next birthday. Perfect for tracking your milestones!</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        function DaysInMonth(Y, M) {
+            with (new Date(Y, M, 1, 12)) {
+                setDate(0);
+                return getDate();
+            }
+        }
+
+        function datediff(date1, date2) {
+            let y1 = date1.getFullYear(), m1 = date1.getMonth(), d1 = date1.getDate();
+            let y2 = date2.getFullYear(), m2 = date2.getMonth(), d2 = date2.getDate();
+            if (d1 < d2) { m1--; d1 += DaysInMonth(y2, m2); }
+            if (m1 < m2) { y1--; m1 += 12; }
+            return [y1 - y2, m1 - m2, d1 - d2];
+        }
+
+        function calage() {
+            const day = document.birthday.day.value;
+            const month = document.birthday.month.value;
+            const year = document.birthday.year.value;
+
+            if (!day || !month || !year) {
+                alert("Please fill all the fields.");
+                return;
+            }
+
+            const today = new Date();
+            const birthDate = new Date(year, month - 1, day);
+            const diff = today - birthDate;
+            const ageArr = datediff(today, birthDate);
+
+            document.birthday.age.value = `${ageArr[0]} years, ${ageArr[1]} months, and ${ageArr[2]} days`;
+            document.birthday.months.value = `${(ageArr[0] * 12) + ageArr[1]} months`;
+            document.birthday.daa.value = `${Math.floor(diff / (1000 * 60 * 60 * 24))} days`;
+            document.birthday.hours.value = `${Math.floor(diff / (1000 * 60 * 60))} hours`;
+            document.birthday.min.value = `${Math.floor(diff / (1000 * 60))} minutes`;
+            document.birthday.sec.value = `${Math.floor(diff / 1000)} seconds`;
+
+            const nextBirthday = new Date(today.getFullYear() + 1, birthDate.getMonth(), birthDate.getDate());
+            const daysToNextBirthday = Math.ceil((nextBirthday - today) / (1000 * 60 * 60 * 24));
+            document.birthday.nbday.value = `${daysToNextBirthday} days left for your next birthday`;
+        }
+    </script>
+</body>
+</html>
