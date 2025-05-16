@@ -38,7 +38,7 @@ It also tells users how many days are **left for their next birthday**!
 
 ## 📷 Screenshots
 
-![Age Calculator Demo](https://agecalculator.iamrohit.in/age-calculator.webp) <!-- Replace with actual screenshot URL if available -->
+![Age Calculator Demo](https://agecalculator.iamrohit.in/age-calculator.jpg) <!-- Replace with actual screenshot URL if available -->
 
 ---
 
